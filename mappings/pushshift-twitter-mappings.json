@@ -1,0 +1,504 @@
+{
+  "settings": {
+    "index": {
+      "codec": "best_compression",
+      "refresh_interval": "5s",
+      "shard.check_on_startup": "checksum",
+      "mapping.coerce": "false",
+      "max_result_window": 25000,
+      "number_of_shards": 16,
+      "number_of_replicas": 0,
+      "routing_partition_size": 4,
+      "queries": {
+        "cache": {
+          "enabled": "true"
+        }
+      }
+    },
+    "analysis": {
+      "analyzer": {
+        "lowercase": {
+          "type": "custom",
+          "filter": [
+            "lowercase"
+          ],
+          "tokenizer": "whitespace"
+        }
+      },
+      "normalizer": {
+        "my_normalizer": {
+          "type": "custom",
+          "char_filter": [],
+          "filter": [
+            "lowercase",
+            "asciifolding"
+          ]
+        }
+      }
+    }
+  },
+  "mappings": {
+    "dynamic": "false",
+    "_routing": {
+      "required": "true"
+    },
+    "_source": {
+      "excludes": [
+        "urls",
+        "updated_delta"
+      ]
+    },
+    "properties": {
+      "updated_utc": {
+        "type": "date",
+        "format": "epoch_second"
+      },
+      "updated_delta": {
+        "type": "integer"
+      },
+      "retrieved_utc": {
+        "type": "date",
+        "format": "epoch_second"
+      },
+      "created_at": {
+        "type": "date",
+        "format": "EEE MMM dd HH:mm:ss Z yyyy||epoch_second"
+      },
+      "id": {
+        "type": "long"
+      },
+      "user_id": {
+        "type": "long"
+      },
+      "in_reply_to_user_id": {
+        "type": "long"
+      },
+      "in_reply_to_status_id": {
+        "type": "long"
+      },
+      "in_reply_to_screen_name": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        },
+        "analyzer": "lowercase"
+      },
+      "coordinates.coordinates": {
+        "type": "geo_point"
+      },
+      "extended_entities": {
+        "properties": {
+          "media": {
+            "properties": {
+              "additional_media_info": {
+                "properties": {
+                  "call_to_actions": {
+                    "properties": {
+                      "visit_site": {
+                        "properties": {
+                          "url": {
+                            "type": "text"
+                          }
+                        }
+                      },
+                      "watch_now": {
+                        "properties": {
+                          "url": {
+                            "type": "text"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": {
+                    "type": "text"
+                  },
+                  "embeddable": {
+                    "type": "boolean"
+                  },
+                  "monetizable": {
+                    "type": "boolean"
+                  },
+                  "title": {
+                    "type": "text"
+                  }
+                }
+              },
+              "display_url": {
+                "type": "text"
+              },
+              "expanded_url": {
+                "type": "text"
+              },
+              "id": {
+                "type": "long"
+              },
+              "media_url": {
+                "type": "text"
+              },
+              "media_url_https": {
+                "type": "text"
+              },
+              "sizes": {
+                "properties": {
+                  "large": {
+                    "properties": {
+                      "h": {
+                        "type": "long"
+                      },
+                      "resize": {
+                        "type": "text"
+                      },
+                      "w": {
+                        "type": "long"
+                      }
+                    }
+                  },
+                  "medium": {
+                    "properties": {
+                      "h": {
+                        "type": "long"
+                      },
+                      "resize": {
+                        "type": "text"
+                      },
+                      "w": {
+                        "type": "long"
+                      }
+                    }
+                  },
+                  "small": {
+                    "properties": {
+                      "h": {
+                        "type": "long"
+                      },
+                      "resize": {
+                        "type": "text"
+                      },
+                      "w": {
+                        "type": "long"
+                      }
+                    }
+                  },
+                  "thumb": {
+                    "properties": {
+                      "h": {
+                        "type": "long"
+                      },
+                      "resize": {
+                        "type": "text"
+                      },
+                      "w": {
+                        "type": "long"
+                      }
+                    }
+                  }
+                }
+              },
+              "source_status_id": {
+                "type": "long"
+              },
+              "source_user_id": {
+                "type": "long"
+              },
+              "type": {
+                "type": "text",
+                "analyzer": "lowercase",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              },
+              "url": {
+                "type": "text"
+              },
+              "video_info": {
+                "properties": {
+                  "aspect_ratio": {
+                    "type": "long"
+                  },
+                  "duration_millis": {
+                    "type": "long"
+                  },
+                  "variants": {
+                    "properties": {
+                      "bitrate": {
+                        "type": "long"
+                      },
+                      "content_type": {
+                        "type": "text"
+                      },
+                      "url": {
+                        "type": "text"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "entities": {
+        "properties": {
+          "hashtags": {
+            "properties": {
+              "text": {
+                "type": "text",
+                "analyzer": "lowercase",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword"
+                  }
+                }
+              }
+            }
+          },
+          "symbols": {
+            "properties": {
+              "text": {
+                "type": "text",
+                "analyzer": "lowercase",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword"
+                  }
+                }
+              }
+            }
+          },
+          "urls": {
+            "properties": {
+              "display_url": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword"
+                  }
+                }
+              },
+              "expanded_url": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword"
+                  }
+                }
+              },
+              "url": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword"
+                  }
+                }
+              }
+            }
+          },
+          "user_mentions": {
+            "properties": {
+              "id": {
+                "type": "long"
+              },
+              "name": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword"
+                  }
+                }
+              },
+              "screen_name": {
+                "type": "text",
+                "analyzer": "lowercase",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "place": {
+        "properties": {
+          "attributes": {
+            "type": "object"
+          },
+          "bounding_box": {
+            "type": "geo_shape",
+            "coerce": true,
+            "ignore_malformed": true
+          },
+          "country": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          },
+          "country_code": {
+            "type": "text",
+            "analyzer": "lowercase",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          },
+          "full_name": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          },
+          "id": {
+            "type": "text",
+            "analyzer": "lowercase",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          },
+          "name": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          },
+          "place_type": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          },
+          "url": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          }
+        }
+      },
+      "screen_name": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        },
+        "analyzer": "lowercase"
+      },
+      "source": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "lang": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        },
+        "analyzer": "lowercase"
+      },
+      "withheld_in_countries": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        },
+        "analyzer": "lowercase"
+      },
+      "withheld_scope": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        },
+        "analyzer": "lowercase"
+      },
+      "deleted": {
+        "type": "boolean"
+      },
+      "is_quote_status": {
+        "type": "boolean"
+      },
+      "is_retweet_status": {
+        "type": "boolean"
+      },
+      "retweeted_status_id": {
+        "type": "long"
+      },
+      "retweeted_status_user_id": {
+        "type": "long"
+      },
+      "retweeted_status_screen_name": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        },
+        "analyzer": "lowercase"
+      },
+      "possibly_sensitive": {
+        "type": "boolean"
+      },
+      "user_verified": {
+        "type": "boolean"
+      },
+      "text": {
+        "type": "text"
+      },
+      "quoted_status_id": {
+        "type": "long"
+      },
+      "quoted_status_user_id": {
+        "type": "long"
+      },
+      "quoted_status_screen_name": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        },
+        "analyzer": "lowercase"
+      },
+      "quote_count": {
+        "type": "integer"
+      },
+      "reply_count": {
+        "type": "integer"
+      },
+      "favorite_count": {
+        "type": "integer"
+      },
+      "retweet_count": {
+        "type": "integer"
+      }
+    }
+  }
+}

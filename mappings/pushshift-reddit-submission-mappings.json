@@ -1,0 +1,527 @@
+{
+  "settings": {
+    "index": {
+      "codec": "default",
+      "refresh_interval": "5s",
+      "shard.check_on_startup": "checksum",
+      "mapping.coerce": "false",
+      "max_result_window": 10000,
+      "number_of_shards": 1,
+      "number_of_replicas": 0,
+      "routing_partition_size": 1,
+      "sort.field": "created_utc",
+      "sort.order": "desc",
+      "queries": {
+        "cache": {
+          "enabled": "true"
+        }
+      }
+    }
+  },
+  "mappings": {
+    "_routing": {
+      "required": false
+    },
+    "_source": {
+      "enabled": true,
+      "excludes": [
+        "title_length",
+        "update_delta"
+      ]
+    },
+    "dynamic": false,
+    "properties": {
+      "all_awardings": {
+        "properties": {
+          "award_type": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          },
+          "count": {
+            "type": "integer"
+          },
+          "is_enabled": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          }
+        }
+      },
+      "is_bot": {
+        "type": "boolean"
+      },
+      "suggested_sort": {
+        "type": "keyword"
+      },
+      "parent_whitelist_status": {
+        "type": "keyword"
+      },
+      "whitelist_status": {
+        "type": "keyword"
+      },
+      "subreddit_type": {
+        "type": "keyword"
+      },
+      "author": {
+        "type": "keyword"
+      },
+      "author_created_utc": {
+        "type": "date",
+        "format": "epoch_second"
+      },
+      "author_created_utc_delta": {
+        "type": "integer"
+      },
+      "author_flair_text": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "author_flair_css_class": {
+        "type": "keyword"
+      },
+      "num_crossposts": {
+        "type": "short"
+      },
+      "subreddit_subscribers": {
+        "type": "integer"
+      },
+      "is_crosspostable": {
+        "type": "boolean"
+      },
+      "send_replies": {
+        "type": "boolean"
+      },
+      "is_original_content": {
+        "type": "boolean"
+      },
+      "can_gild": {
+        "type": "boolean"
+      },
+      "no_follow": {
+        "type": "boolean"
+      },
+      "is_reddit_media_domain": {
+        "type": "boolean"
+      },
+      "mod_removed": {
+        "type": "boolean"
+      },
+      "user_removed": {
+        "type": "boolean"
+      },
+      "contest_mode": {
+        "type": "boolean"
+      },
+      "created_utc": {
+        "type": "date",
+        "format": "epoch_second"
+      },
+      "retrieved_on": {
+        "type": "date",
+        "format": "epoch_second"
+      },
+      "last_updated": {
+        "type": "date",
+        "format": "epoch_second"
+      },
+      "update_delta": {
+        "type": "integer"
+      },
+      "distinguished": {
+        "type": "keyword"
+      },
+      "category": {
+        "type": "keyword"
+      },
+      "thumbnail": {
+        "type": "keyword"
+      },
+      "domain": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "is_edited": {
+        "type": "boolean"
+      },
+      "edited_on": {
+        "type": "date",
+        "format": "epoch_second"
+      },
+      "title_length": {
+        "type": "short"
+      },
+      "selftext_length": {
+        "type": "integer"
+      },
+      "gildings": {
+        "properties": {
+          "gid_1": {
+            "type": "short"
+          },
+          "gid_2": {
+            "type": "short"
+          },
+          "gid_3": {
+            "type": "short"
+          }
+        }
+      },
+      "id": {
+        "type": "text"
+      },
+      "body": {
+        "type": "text"
+      },
+      "is_self": {
+        "type": "boolean"
+      },
+      "is_video": {
+        "type": "boolean"
+      },
+      "link_flair_css_class": {
+        "type": "keyword"
+      },
+      "link_flair_text": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "locked": {
+        "type": "boolean"
+      },
+      "media": {
+        "properties": {
+          "oembed": {
+            "properties": {
+              "author_name": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword"
+                  }
+                }
+              },
+              "author_url": {
+                "type": "text"
+              },
+              "description": {
+                "type": "text"
+              },
+              "html": {
+                "type": "text"
+              },
+              "mean_alpha": {
+                "type": "float"
+              },
+              "provider_name": {
+                "type": "text"
+              },
+              "provider_url": {
+                "type": "text"
+              },
+              "title": {
+                "type": "text"
+              },
+              "type": {
+                "type": "text"
+              },
+              "url": {
+                "type": "text"
+              }
+            }
+          },
+          "reddit_video": {
+            "properties": {
+              "dash_url": {
+                "type": "text"
+              },
+              "duration": {
+                "type": "integer"
+              },
+              "is_gif": {
+                "type": "boolean"
+              },
+              "scrubber_media_url": {
+                "type": "text"
+              }
+            }
+          },
+          "type": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          }
+        }
+      },
+      "media_embed": {
+        "properties": {
+          "content": {
+            "type": "text"
+          }
+        }
+      },
+      "num_comments": {
+        "type": "integer"
+      },
+      "over_18": {
+        "type": "boolean"
+      },
+      "permalink": {
+        "type": "text"
+      },
+      "post_hint": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "preview": {
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          },
+          "images": {
+            "properties": {
+              "id": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword"
+                  }
+                }
+              },
+              "resolutions": {
+                "properties": {
+                  "height": {
+                    "type": "integer"
+                  },
+                  "url": {
+                    "type": "text"
+                  },
+                  "width": {
+                    "type": "integer"
+                  }
+                }
+              },
+              "source": {
+                "properties": {
+                  "url": {
+                    "type": "text"
+                  }
+                }
+              },
+              "variants": {
+                "properties": {
+                  "gif": {
+                    "properties": {
+                      "resolutions": {
+                        "properties": {
+                          "url": {
+                            "type": "text"
+                          }
+                        }
+                      },
+                      "source": {
+                        "properties": {
+                          "url": {
+                            "type": "text"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "mp4": {
+                    "properties": {
+                      "resolutions": {
+                        "properties": {
+                          "url": {
+                            "type": "text"
+                          }
+                        }
+                      },
+                      "source": {
+                        "properties": {
+                          "url": {
+                            "type": "text"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "nsfw": {
+                    "properties": {
+                      "resolutions": {
+                        "properties": {
+                          "url": {
+                            "type": "text"
+                          }
+                        }
+                      },
+                      "source": {
+                        "properties": {
+                          "height": {
+                            "type": "integer"
+                          },
+                          "url": {
+                            "type": "text"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "obfuscated": {
+                    "properties": {
+                      "resolutions": {
+                        "properties": {
+                          "url": {
+                            "type": "text"
+                          }
+                        }
+                      },
+                      "source": {
+                        "properties": {
+                          "url": {
+                            "type": "text"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "promoted": {
+        "type": "boolean"
+      },
+      "score": {
+        "type": "integer"
+      },
+      "secure_media": {
+        "properties": {
+          "oembed": {
+            "properties": {
+              "author_name": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword"
+                  }
+                }
+              },
+              "author_url": {
+                "type": "text"
+              },
+              "cache_age": {
+                "type": "long"
+              },
+              "description": {
+                "type": "text"
+              },
+              "html": {
+                "type": "text"
+              },
+              "mean_alpha": {
+                "type": "float"
+              },
+              "provider_name": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 128
+                  }
+                }
+              },
+              "provider_url": {
+                "type": "text"
+              },
+              "thumbnail_url": {
+                "type": "text"
+              },
+              "title": {
+                "type": "text"
+              },
+              "type": {
+                "type": "text"
+              },
+              "url": {
+                "type": "text"
+              },
+              "version": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 32
+                  }
+                }
+              }
+            }
+          },
+          "type": {
+            "type": "text"
+          }
+        }
+      },
+      "secure_media_embed": {
+        "properties": {
+          "content": {
+            "type": "text"
+          }
+        }
+      },
+      "selftext": {
+        "type": "text"
+      },
+      "spoiler": {
+        "type": "boolean"
+      },
+      "stickied": {
+        "type": "boolean"
+      },
+      "subreddit": {
+        "type": "keyword"
+      },
+      "title": {
+        "type": "text"
+      },
+      "url": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      }
+    }
+  }
+}
