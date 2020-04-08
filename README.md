@@ -21,10 +21,8 @@ Set up a few environment variables to make this work:
 Running
 -------
 
-You need to know the `topics_id`, `snapshots_id` and have a mappings file handy. Then run it like:
+You need to know the `topics_id` and `snapshots_id`. Then run it like:
 
 ```
-python topic2kibana.py [topics_id] [snapshots_id] [path/to/mappings/file]
+python topic2kibana.py [topics_id] [snapshots_id]
 ```
-
-There are some handy renference mappings files in the `mappings` directory.
