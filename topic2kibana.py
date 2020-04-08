@@ -77,15 +77,14 @@ def upload_to_kibana(ndjson_file_path: str, es_host: str, index_name: str, mappi
            "--index", index_name,
            "--index-settings-file", mappings_file_path,
            "json",
-           ndjson_file_path,
-           "--json-lines"]
+           ndjson_file_path]
     #subprocess.check_output(cmd)
     logger.info(cmd)
 
 
 if __name__ == "__main__":
     # parse out command line args
-    if len(sys.argv) is not 5:
+    if len(sys.argv) is not 4:
         logger.error("You must pass in a topics_id, snapshots_id, and mappings file")
         sys.exit()
     topic = int(sys.argv[1])
@@ -96,5 +95,6 @@ if __name__ == "__main__":
     # now try to upload the files to kibana
     logger.info("Ready to upload {} files".format(len(file_info)))
     for f in file_info:
-        index_name = 'topic-{}-snapshot-{}-{}'.format(f['topics_id'], f['snapshots_id'], f['name'])
-        #upload_to_kibana(f['file_path'], ELASTIC_SEARCH_HOST, index_name, mappings_file_path)
+        index_name = 'topic-{}-snapshot-{}-{}-{}'.format(f['topics_id'], f['snapshots_id'],
+                                                         f['snapshot_files_id'], f['name'])
+        upload_to_kibana(f['file_path'], ELASTIC_SEARCH_HOST, index_name, mappings_file_path)
