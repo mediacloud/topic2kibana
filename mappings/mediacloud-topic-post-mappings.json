@@ -1,0 +1,89 @@
+{
+  "settings": {
+    "index": {
+      "codec": "best_compression",
+      "refresh_interval": "5s",
+      "shard.check_on_startup": "checksum",
+      "mapping.coerce": "false",
+      "max_result_window": 25000,
+      "number_of_shards": 16,
+      "number_of_replicas": 0,
+      "routing_partition_size": 4,
+      "queries": {
+        "cache": {
+          "enabled": "true"
+        }
+      }
+    },
+    "analysis": {
+      "analyzer": {
+        "lowercase": {
+          "type": "custom",
+          "filter": [
+            "lowercase"
+          ],
+          "tokenizer": "whitespace"
+        }
+      },
+      "normalizer": {
+        "my_normalizer": {
+          "type": "custom",
+          "char_filter": [],
+          "filter": [
+            "lowercase",
+            "asciifolding"
+          ]
+        }
+      }
+    }
+  },
+  "mappings": {
+    "dynamic": "false",
+    "_routing": {
+      "required": "true"
+    },
+    "_source": {
+      "excludes": [
+        "urls",
+        "updated_delta"
+      ]
+    },
+    "properties": {
+      "author": {
+        "type": "text",
+        "analyzer": "lowercase"
+      },
+      "channel": {
+        "type": "text",
+        "analyzer": "lowercase"
+      },
+      "content": {
+        "type": "text",
+        "analyzer": "lowercase"
+      },
+      "post_id": {
+        "type": "text"
+      },
+      "publish_date": {
+        "type": "date",
+        "format": "yyyy-MM-dd HH:mm:ss",
+      },
+      "topic_posts_days_id": {
+        "type": "long"
+      },
+      "topic_posts_id": {
+        "type": "long"
+      },
+      "topic_seed_queries_id": {
+        "type": "long"
+      },
+      "url": {
+        "type": "text",
+        "analyzer": "lowercase"
+      },
+      "data": {
+        "type": "object"
+      }
+    }
+  }
+}

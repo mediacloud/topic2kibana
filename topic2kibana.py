@@ -69,32 +69,31 @@ def download_snapshot_files(topics_id: int, snapshots_id: int, download_dir: str
 
 def upload_to_kibana(ndjson_file_path: str, es_host: str, index_name: str, mappings_file_path: str):
     logger.info("  Upload {}".format(ndjson_file_path))
-    logger.info("    into index {} on {}".format(index_name, es_host))
-    logger.info("    using mapping {}".format(mappings_file_path))
-    logger.info("    file size: {:0.2f} MB".format(file_size_mb(ndjson_file_path)))
+    logger.debug("    into index {} on {}".format(index_name, es_host))
+    logger.debug("    using mapping {}".format(mappings_file_path))
+    logger.debug("    file size: {:0.2f} MB".format(file_size_mb(ndjson_file_path)))
     cmd = ["elasticsearch_loader",
            "--es-host", es_host,
            "--index", index_name,
            "--index-settings-file", mappings_file_path,
            "json",
            ndjson_file_path]
+    logger.debug(" ".join(cmd))
     #subprocess.check_output(cmd)
-    logger.info(cmd)
 
 
 if __name__ == "__main__":
     # parse out command line args
-    if len(sys.argv) is not 4:
-        logger.error("You must pass in a topics_id, snapshots_id, and mappings file")
+    if len(sys.argv) is not 3:
+        logger.error("You must pass in a topics_id and snapshots_id")
         sys.exit()
     topic = int(sys.argv[1])
     snapshot = int(sys.argv[2])
-    mappings_file_path = sys.argv[3]
+    mappings_file_path = os.path.join('mappings', 'mediacloud-topic-post-mappings.json')
     # we first need to get the very large dump files with all the content
     file_info = download_snapshot_files(topic, snapshot, get_files_dir())
     # now try to upload the files to kibana
     logger.info("Ready to upload {} files".format(len(file_info)))
     for f in file_info:
-        index_name = 'topic-{}-snapshot-{}-{}-{}'.format(f['topics_id'], f['snapshots_id'],
-                                                         f['snapshot_files_id'], f['name'])
+        index_name = 'topic-{}-snapshot-{}'.format(f['topics_id'], f['snapshots_id'])
         upload_to_kibana(f['file_path'], ELASTIC_SEARCH_HOST, index_name, mappings_file_path)
