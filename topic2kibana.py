@@ -73,11 +73,13 @@ def upload_to_kibana(ndjson_file_path: str, es_host: str, index_name: str, mappi
     logger.debug("    using mapping {}".format(mappings_file_path))
     logger.debug("    file size: {:0.2f} MB".format(file_size_mb(ndjson_file_path)))
     cmd = ["elasticsearch_loader",
-           "--es-host", es_host,
-           "--index", index_name,
-           "--index-settings-file", mappings_file_path,
+           "--es-host={}".format(es_host),
+           "--index={}".format(index_name),
+           "--index-settings-file={}".format(mappings_file_path),
            "json",
-           ndjson_file_path]
+           ndjson_file_path,
+           "--json-lines"
+           ]
     logger.debug(" ".join(cmd))
     #subprocess.check_output(cmd)
 
