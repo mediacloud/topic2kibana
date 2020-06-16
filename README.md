@@ -16,7 +16,7 @@ Configuration
 Set up a few environment variables to make this work:
 
 * MC_API_KEY: your Media Cloud API key (with admin privileges)
-* ELASTIC_SEARCH_HOST: the URL of your Elastic Search host, including the port number
+* ELASTIC_SEARCH_HOST: the URL of your Elastic Search host, including the port number (ie. http://my.host:9200)
 
 Running
 -------

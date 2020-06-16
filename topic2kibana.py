@@ -67,7 +67,7 @@ def download_snapshot_files(topics_id: int, snapshots_id: int, download_dir: str
     return results
 
 
-def upload_to_kibana(ndjson_file_path: str, es_host: str, index_name: str, mappings_file_path: str):
+def upload_to_elasticsearch(ndjson_file_path: str, es_host: str, index_name: str, mappings_file_path: str):
     logger.info("  Upload {}".format(ndjson_file_path))
     logger.debug("    into index {} on {}".format(index_name, es_host))
     logger.debug("    using mapping {}".format(mappings_file_path))
@@ -81,7 +81,8 @@ def upload_to_kibana(ndjson_file_path: str, es_host: str, index_name: str, mappi
            "--json-lines"
            ]
     logger.debug(" ".join(cmd))
-    #subprocess.check_output(cmd)
+    subprocess.check_output(cmd)
+    logger.info("    completed upload")
 
 
 if __name__ == "__main__":
@@ -94,8 +95,8 @@ if __name__ == "__main__":
     mappings_file_path = os.path.join('mappings', 'mediacloud-topic-post-mappings.json')
     # we first need to get the very large dump files with all the content
     file_info = download_snapshot_files(topic, snapshot, get_files_dir())
-    # now try to upload the files to kibana
+    # now try to upload the files to elasticsearch
     logger.info("Ready to upload {} files".format(len(file_info)))
     for f in file_info:
         index_name = 'topic-{}-snapshot-{}'.format(f['topics_id'], f['snapshots_id'])
-        upload_to_kibana(f['file_path'], ELASTIC_SEARCH_HOST, index_name, mappings_file_path)
+        upload_to_elasticsearch(f['file_path'], ELASTIC_SEARCH_HOST, index_name, mappings_file_path)
